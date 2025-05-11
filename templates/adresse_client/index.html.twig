@@ -1,0 +1,109 @@
+{# templates/adresse_client/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<!-- Tabs -->
+	<nav class="text-white bg-gray-50">
+		<div class=" mx-auto px-4 flex justify-center space-x-6 text-sm">
+			<ul class="m-6 flex space-x-4 bg-gray-400 px-12 py-4 rounded-xl">
+				<li>
+					<a href="./profil" class="text-white hover:text-indigo-600">Profil</a>
+				</li>
+				<li>
+					<a href="./adresse" class="text-white hover:text-indigo-600">Adresse</a>
+				</li>
+				<li>
+					<a href="./commandes" class="text-white hover:text-indigo-600">Historique de commande</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<div
+		class="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+
+		<!-- Formulaire d'adresse -->
+		<div id="adresse" class="w-full max-w-lg p-8 bg-white shadow-md rounded-lg">
+			<h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">Ajouter une adresse</h2>
+			<form method="post" class="space-y-6">
+
+				{% if not formAdresse.vars.valid %}
+					<div class="text-red-600 mb-4">
+						{{ form_errors(formAdresse) }}
+					</div>
+				{% endif %}
+
+				<!-- Formulaire -->
+				{{ form_start(formAdresse) }}
+
+				<div
+					class="space-y-4">
+					<!-- Type -->
+					<div class="mb-4">
+						{{ form_row(formAdresse.type, {
+                        'attr': {'class': 'text-sm font-medium text-gray-600 form-input block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500'}
+                    }) }}
+					</div>
+
+					<!-- Name -->
+					<div class="mb-4">
+						{{ form_row(formAdresse.name, {
+                        'attr': {'class': 'text-sm font-medium text-gray-600 form-input block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500'}
+                    }) }}
+					</div>
+
+					<!-- First Name -->
+					<div class="mb-4">
+						{{ form_row(formAdresse.firstName, {
+                        'attr': {'class': 'text-sm font-medium text-gray-600 form-input block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500'}
+                    }) }}
+					</div>
+
+					<!-- Phone -->
+					<div class="mb-4">
+						{{ form_row(formAdresse.phone, {
+                        'attr': {'class': 'text-sm font-medium text-gray-600 form-input block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500'}
+                    }) }}
+					</div>
+
+					<!-- Address -->
+					<div class="mb-4">
+						{{ form_row(formAdresse.address, {
+                        'attr': {'class': 'text-sm font-medium text-gray-600 form-input block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500'}
+                    }) }}
+					</div>
+
+					<!-- Postal Code -->
+					<div class="mb-4">
+						{{ form_row(formAdresse.cp, {
+                        'attr': {'class': 'text-sm font-medium text-gray-600 form-input block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500'}
+                    }) }}
+					</div>
+
+					<!-- City -->
+					<div class="mb-4">
+						{{ form_row(formAdresse.city, {
+                        'attr': {'class': 'text-sm font-medium text-gray-600 form-input block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500'}
+                    }) }}
+					</div>
+
+					<!-- Country -->
+					<div class="mb-4">
+						{{ form_row(formAdresse.country, {
+                        'attr': {'class': 'text-sm font-medium text-gray-600 form-input block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500'}
+                    }) }}
+					</div>
+
+					<!-- Submit Button -->
+					<button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md mt-4 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400">
+						Ajouter l'adresse
+					</button>
+				</div>
+
+				{{ form_end(formAdresse) }}
+			</form>
+
+		</div>
+	</div>
+{% endblock %}

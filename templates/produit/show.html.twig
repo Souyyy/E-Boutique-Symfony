@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="max-w-screen-lg mx-auto py-10 flex items-center px-4 min-h-[calc(100vh-168px)]">
+
+    <div class="bg-white shadow-md rounded-2xl overflow-hidden hover:shadow-xl transition-shadow p-6">
+    {% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="mb-4 px-4 py-3 rounded bg-green-100 text-green-800 shadow-md">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 w-full">
+
+
+            <!-- Section Image / Carousel -->
+            <div class="flex items-center justify-center">
+                {% set images = produit.media %}
+
+                {% if images|length > 1 %}
+                    <div x-data="{ active: 0, images: {{ images|map(m => m.path)|json_encode|raw }} }"
+                         x-init="setInterval(() => active = (active + 1) % images.length, 4000)"
+                         class="relative overflow-hidden rounded-lg shadow-md h-96 w-full">
+                        <template x-for="(image, index) in images" :key="index">
+                            <div x-show="active === index"
+                                 x-transition:enter="transition-opacity duration-1000"
+                                 x-transition:enter-start="opacity-0"
+                                 x-transition:enter-end="opacity-100"
+                                 x-transition:leave="transition-opacity duration-1000"
+                                 x-transition:leave-start="opacity-100"
+                                 x-transition:leave-end="opacity-0"
+                                 class="absolute inset-0">
+                                <img :src="image" alt="Produit image"
+                                     class="w-full h-full object-contain rounded-lg">
+                            </div>
+                        </template>
+                    </div>
+                {% elseif images|length == 1 %}
+                    <img src="{{ images[0].path }}" alt="{{ images[0].alt }}"
+                         class="rounded-lg w-full h-full object-contain">
+                {% else %}
+                    <div class="h-full w-full bg-gray-200 flex items-center justify-center text-gray-500 rounded-lg">
+                        Pas d'image disponible
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Section Infos produit -->
+            <div class="flex flex-col justify-center space-y-4 {% if not produit.available %} opacity-50 {% endif %}">
+                <h1 class="text-3xl uppercase font-bold text-gray-800">{{ produit.name }}</h1>
+                <p class="text-gray-700 text-md">{{ produit.description }}</p>
+
+                <div class="text-gray-900 space-y-1">
+                    <p class="text-lg font-semibold">Prix HT : {{ produit.priceHt }} €</p>
+                    <p class="text-sm text-gray-600">soit TTC : {{ produit.priceTTC }} €</p>
+                    <p class="text-sm font-semibold text-{{ produit.available ? 'green' : 'red' }}-600">
+                        {{ produit.available ? 'Disponible' : 'Indisponible' }}
+                    </p>
+                </div>
+
+                <div>
+                    {% if produit.available %}
+                        <a href="{{ path('ajouter_au_panier', {'id': produit.id}) }}"
+                           class="inline-block px-6 py-2 bg-zinc-800 text-white rounded hover:bg-zinc-700 text-sm shadow">
+                            Ajouter au panier
+                        </a>
+                    {% else %}
+                        <span class="inline-block px-6 py-2 bg-gray-300 text-gray-600 rounded text-sm cursor-not-allowed">
+                            Indisponible
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/alpinejs" defer></script>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes commandes{% endblock %}
+
+{% block body %}
+<!-- Tabs -->
+<nav class="text-white bg-gray-50">
+    <div class=" mx-auto px-4 flex justify-center space-x-6 text-sm">
+        <ul class="m-6 flex space-x-4 bg-gray-400 px-12 py-4 rounded-xl">
+                <li>
+                    <a href="../profil" class="text-white hover:text-indigo-600">Profil</a>
+                </li>
+                <li>
+                    <a href="../adresse" class="text-white hover:text-indigo-600">Adresse</a>
+                </li>
+                <li>
+                    <a href="#" class="text-white hover:text-indigo-600">Historique de commande</a>
+                </li>
+            </ul>
+    </div>
+</nav>
+
+
+<div class="flex flex-col items-center justify-center min-h-[calc(100vh-268px)] bg-gray-50">
+
+        
+    <h1 class="text-3xl font-bold mb-6">Mes commandes</h1>
+
+    {% if commandes is empty %}
+        <div class="bg-blue-100 text-blue-800 p-4 rounded-lg">Vous n'avez encore passé aucune commande.</div>
+    {% else %}
+        {% for commande in commandes %}
+            <div class="bg-white shadow rounded-xl p-6 mb-6 border md:w-1/2">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <p class="font-semibold text-lg">Commande n°{{ commande.orderNumber }}</p>
+                        <p class="text-sm text-gray-500">{{ commande.dateTime|date('d/m/Y H:i') }}</p>
+                    </div>
+                    {% if app.user.adresseClients|length > 0 %}
+                        {% set adresse = app.user.adresseClients|first %}
+                        <div class="text-right text-sm text-gray-700">
+                            <p class="font-medium">Adresse de livraison :</p>
+                            <p>{{ adresse.firstName }} {{ adresse.name }}</p>
+                            <p>{{ adresse.address }}, {{ adresse.cp }} {{ adresse.city }}</p>
+                            <p>{{ adresse.country }}</p>
+                        </div>
+                    {% endif %}
+                </div>
+
+                {% if commande.commandLines is not empty %}
+                    <ul class="divide-y divide-gray-200 mb-4">
+                        {% set total = 0 %}
+                        {% for ligne in commande.commandLines %}
+                            {% set ligneTotal = ligne.produit.priceTTC * ligne.quantity %}
+                            {% set total = total + ligneTotal %}
+                            <li class="py-2 flex justify-between">
+                                <span>{{ ligne.produit.name }} <span class="text-gray-500">(x{{ ligne.quantity }})</span></span>
+                                <span class="font-medium">{{ ligneTotal|number_format(2, '.', ' ') }} €</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="text-right font-bold text-lg">
+                        Total TTC : {{ total|number_format(2, '.', ' ') }} €
+                    </div>
+                {% else %}
+                    <p class="text-gray-500">Aucun produit dans cette commande.</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}

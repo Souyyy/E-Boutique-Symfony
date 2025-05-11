@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre panier{% endblock %}
+
+{% block body %}
+<div class="max-w-5xl mx-auto px-4 py-8 min-h-[calc(100vh-168px)]">
+    <h1 class="text-3xl text-center pb-3 font-bold text-gray-800 mb-6">Votre panier</h1>
+
+    {% if produits is empty %}
+        <div class="bg-gray-50 border border-gray-200 p-6 rounded-lg text-center">
+            <p class="text-gray-600 text-lg">Votre panier est vide.</p>
+            <a href="{{ path('app_home') }}" class="mt-4 inline-block text-sm text-blue-600 hover:underline">Retour à l'accueil</a>
+        </div>
+    {% else %}
+        <div class="overflow-x-auto rounded-lg shadow-sm bg-white">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-100 text-gray-700 text-sm uppercase">
+                    <tr>
+                        <th class="px-6 py-4 text-left">Produit</th>
+                        <th class="px-6 py-4 text-center">Quantité</th>
+                        <th class="px-6 py-4 text-right">Prix HT</th>
+                        <th class="px-6 py-4 text-right">Prix TTC</th>
+                        <th class="px-6 py-4 text-right">Total</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    {% for item in produits %}
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-800">{{ item.produit.name }}</td>
+                            <td class="px-6 py-4 text-center">
+                                <form method="post" action="{{ path('modifier_quantite_panier', {'id': item.produit.id}) }}" class="flex items-center justify-center space-x-2">
+                                    <input type="number" name="quantite" min="1" value="{{ item.quantite }}"
+                                        class="w-16 p-1 border border-gray-300 rounded text-center text-sm">
+                                    <button type="submit"
+                                        class="text-blue-600 text-sm hover:underline">Modifier</button>
+                                </form>
+                            </td>
+                            <td class="px-6 py-4 text-right text-gray-700">{{ item.produit.PriceHT }} €</td>
+                            <td class="px-6 py-4 text-right text-gray-700">{{ item.produit.PriceTTC }} €</td>
+                            <td class="px-6 py-4 text-right text-gray-900 font-semibold">{{ item.total }} €</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-6 flex justify-end items-center">
+            <p class="text-xl font-semibold text-gray-800">Total à payer : <span class="text-green-600">{{ total }} €</span></p>
+        </div>
+
+        <div class="mt-6 text-right space-y-4">
+            {% if not app.user %}
+                <p class="text-red-600">Vous devez être connecté pour passer commande.</p>
+                <a href="{{ path('app_login') }}"
+                    class="inline-block bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
+                    Se connecter
+                </a>
+            {% elseif app.user.adresseClients is empty %}
+                <p class="text-red-600">Veuillez ajouter une adresse avant de passer commande.</p>
+                <a href="{{ path('app_user_adresse') }}"
+                    class="inline-block bg-yellow-500 text-white px-5 py-2 rounded hover:bg-yellow-600 transition">
+                    Ajouter une adresse
+                </a>
+            {% else %}
+                <form action="{{ path('valider_commande') }}" method="post">
+                    <button type="submit"
+                        class="bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition shadow">
+                        ✅ Passer commande
+                    </button>
+                </form>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

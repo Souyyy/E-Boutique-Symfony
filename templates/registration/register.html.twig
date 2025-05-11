@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <div class="flex items-center justify-center min-h-[calc(100vh-140px)] bg-gray-100">
+        <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+            <h1 class="text-2xl font-semibold text-center mb-6">Inscription à la Boutique</h1>
+
+            {{ form_errors(registrationForm) }}
+
+            {{ form_start(registrationForm) }}
+                
+                <div class="mb-4">
+                    {{ form_row(registrationForm.name, {
+                        'attr': {'class': 'form-input block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500'}
+                    }) }}
+                </div>
+
+                <div class="mb-4">
+                    {{ form_row(registrationForm.first_name, {
+                        'attr': {'class': 'form-input block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500'}
+                    }) }}
+                </div>
+
+                <div class="mb-4">
+                    {{ form_row(registrationForm.email, {
+                        'attr': {'class': 'form-input block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500'}
+                    }) }}
+                </div>
+
+                <div class="mb-4">
+                    {{ form_row(registrationForm.password, {
+                        label: 'Mot de passe',
+                        'attr': {'class': 'form-input block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500'}
+                    }) }}
+                </div>
+
+                <style>
+                    .add_div>div{
+                        display: flex;
+flex-direction: row-reverse;
+justify-content: flex-end;
+align-content: center;
+align-items: center;
+margin-bottom: 1rem;
+                    }
+                </style>
+
+                <div class="add_div">
+                
+                    {{ form_row(registrationForm.agreeTerms, {
+                        label: 'Termes & Conditions',
+                        'attr': {'class': 'mr-2 form-checkbox h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500'}
+                    }) }}
+                </div>
+
+                <div class="flex justify-center">
+                    <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        Inscription
+                    </button>
+                </div>
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+{% endblock %}

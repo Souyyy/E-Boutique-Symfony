@@ -1,0 +1,63 @@
+{# templates/user_profil/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<!-- Tabs -->
+	<nav class="text-white bg-gray-50">
+		<div class=" mx-auto px-4 flex justify-center space-x-6 text-sm">
+			<ul class="m-6 flex space-x-4 bg-gray-400 px-12 py-4 rounded-xl">
+				<li>
+					<a href="./profil" class="text-white hover:text-indigo-600">Profil</a>
+				</li>
+				<li>
+					<a href="./adresse" class="text-white hover:text-indigo-600">Adresse</a>
+				</li>
+				<li>
+					<a href="./commandes" class="text-white hover:text-indigo-600">Historique de commande</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="flex flex-col items-center justify-center min-h-[calc(100vh-268px)] bg-gray-50">
+
+		<div class="w-full max-w-md p-8 bg-white shadow-md rounded-lg">
+			<h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">Modifier mon profil</h2>
+
+			{% for message in app.flashes('success') %}
+				<div class="bg-green-500 text-white p-4 mb-4 rounded">
+					{{ message }}
+				</div>
+			{% endfor %}
+
+			<form method="post" class="space-y-6">
+				{{ form_start(formProfil) }}
+
+				<div class="mb-4">
+					{{ form_row(formProfil.firstName, {
+                        'attr': {'class': 'text-sm font-medium text-gray-600 form-input block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500'}
+                    }) }}
+				</div>
+
+				<div class="mb-4">
+					{{ form_row(formProfil.name, {
+                        'attr': {'class': 'text-sm font-medium text-gray-600 form-input block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500'}
+                    }) }}
+				</div>
+
+				<div class="mb-4">
+					{{ form_row(formProfil.email, {
+                        'attr': {'class': 'text-sm font-medium text-gray-600 form-input block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500'}
+                    }) }}
+				</div>
+
+				<button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md mt-4 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400">
+					Mettre à jour
+				</button>
+
+				{{ form_end(formProfil) }}
+			</form>
+		</div>
+	</div>
+{% endblock %}
