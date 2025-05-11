@@ -88,12 +88,12 @@ Ce projet utilise plusieurs technologies modernes pour créer une expérience in
    
 Ouvrez votre terminal et exécutez la commande suivante pour cloner le dépôt :
 
-```git clone https://github.com/Souyyy/Symfony-boutique/```
+```git clone https://github.com/Souyyy/E-Boutique-Symfony/```
 
 ### 2. Accéder au répertoire
 Naviguez dans le dossier du projet :
 
-```cd Symfony-boutique```
+```cd E-Boutique-Symfony```
 
 ### 3. Installer les dépendances
 Installez toutes les dépendances nécessaires au projet :
