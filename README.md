@@ -104,6 +104,8 @@ Cette étape peut prendre quelques minutes selon votre connexion internet.
 
 ### 3.1 Installer la BDD
 
+Créez une base de donnée nommé `SymShop`, et importer le fichier SQL
+
 ### 4. Lancer l'application
 
 Démarrez le serveur de développement :
